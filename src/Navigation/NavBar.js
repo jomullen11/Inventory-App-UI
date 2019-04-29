@@ -6,15 +6,6 @@ const active = {color: '#FFF9EF', backgroundColor: '#73A3FB', boxShadow: '0 0 0 
 class NavBar extends Component {
     render(){
         return(
-            // <div>
-            //     <nav id="nav-bar">
-                    // <NavLink exact to='/' activeStyle={active} className="nav-link">The Hub</NavLink>
-                    // <NavLink to='/survival' activeStyle={active} className="nav-link">Survival</NavLink>
-                    // <NavLink to='/kitchen' activeStyle={active} className="nav-link">Kitchen</NavLink>
-                    // <NavLink to='/home' activeStyle={active} className="nav-link">Home</NavLink>
-                    // <NavLink to='/festival' activeStyle={active} className="nav-link">Festival</NavLink>
-            //     </nav>
-            // </div>
             <div>
             <input type="checkbox" id="slide" name="" value="" />
             <div className="container menu-button" id="menu-button">
@@ -35,9 +26,6 @@ class NavBar extends Component {
                     </li>
                     <li>
                         <NavLink to='/festival' activeStyle={active} className="fest-link">Festival</NavLink>
-                    </li>
-                    <li>
-                        <NavLink to='/create' activeStyle={active}>Create</NavLink>
                     </li>
                     </ul>
                 </nav>

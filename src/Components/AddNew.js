@@ -31,8 +31,8 @@ class AddNew extends Component {
     this.setState({ show: true });
     }
 
-    handleSubmit = (event) => {
-        event.preventDefault()
+    // handleSubmit = async (event) => { 
+    //     event.preventDefault()
 
         // this.setState({
         //     name: null,
@@ -40,7 +40,7 @@ class AddNew extends Component {
         //     desc: null,
         //     expire: null
         // })
-    }
+    // }
 
     handleReset = () => {
         this.setState({

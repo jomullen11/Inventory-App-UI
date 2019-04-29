@@ -1,1 +1,1 @@
-export default API_URL = `http://www.localhost3000` //development url
+export const API_URL = 'http://www.localhost:3000' //development url

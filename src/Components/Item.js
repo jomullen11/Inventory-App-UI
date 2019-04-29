@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const Item = ({ onClick, have, text }) => (
+const Item = ({ onClick, handleDelete, have, text }) => (
     <li
         style = {{
             color: have ? 'black' : 'red'
@@ -17,13 +17,17 @@ const Item = ({ onClick, have, text }) => (
         >
         Have
         </button>
+        {/* <button
+            type = 'button'
+            onClick={handleDelete}
+        >Remove</button> */}
     </li>
 )
 
 Item.propTypes = {
     onClick: PropTypes.func.isRequired,
     have: PropTypes.bool.isRequired,
-    text: PropTypes.string.isRequired
+    text: PropTypes.string.isRequired,
 }
 
 export default Item

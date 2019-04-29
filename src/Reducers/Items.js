@@ -14,6 +14,9 @@ const items = (state=[], action) => {
                 item.id === action.id ? { ...item, have : !item.have } : item )
             default:
                 return state
+        // case 'REMOVE_ITEM':
+        //     return state.map(item => 
+        //         item.id === action.id ? { ...item, have: !item.have} : item)
     }
 }
 

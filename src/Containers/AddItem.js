@@ -17,7 +17,7 @@ let AddItem = ({ dispatch}) => {
             }}
             >
                 <input ref = { node => { input = node }} />
-                <button type='submit'>Add Item</button>
+                <button type='submit'>Need Item</button>
             </form>
         </div>
     )
