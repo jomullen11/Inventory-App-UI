@@ -4,8 +4,9 @@ import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 import haveItem from './Reducers'
 import HaveDisplay from './Components/HaveDisplay'
+import configureStore from '../store/configureStore';
 
-const store = createStore(haveItem)
+const store = configureStore()
 
 const InventoryRedux = () => {
 return(

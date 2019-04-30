@@ -3,9 +3,10 @@ import PropTypes from 'prop-types'
 import Item from './Item'
 
 const ItemList = ({ items, toggleItem, removeItem }) => (
+    
     <ul>
         {items.map(item => (
-            <Item key={item.id} {...item} onClick={() => toggleItem(item.id)} //handleDelete={() => removeItem(item.id)} 
+            <Item key={item.id} item={item} {...item} onClick={() => toggleItem(item.id)} handleDelete={() => removeItem(item.id)} 
             />
         ))}
     </ul>

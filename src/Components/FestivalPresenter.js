@@ -37,7 +37,7 @@ class FestivalPresenter extends Component {
     render(){
         const festivalItems = this.props.read
         return(
-            <form className="readForm container">
+            <div className="readForm container">
                 <ul>
                     <h1 className='readItemsH1'>{festivalItems.name}</h1>
                     Type: {festivalItems.type} <br/>
@@ -46,7 +46,7 @@ class FestivalPresenter extends Component {
                     {festivalItems.expire ? 'Expiration: ' + festivalItems.expire : null}
                 </ul>
                     { this.state.isUpdating ? <this.updateForm /> : <this.buttons />}
-            </form>
+            </div>
         )
     }
 }

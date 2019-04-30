@@ -17,17 +17,19 @@ const Item = ({ onClick, handleDelete, have, text }) => (
         >
         Have
         </button>
-        {/* <button
+        <button
             type = 'button'
             onClick={handleDelete}
-        >Remove</button> */}
+        >Remove</button>
     </li>
 )
 
 Item.propTypes = {
     onClick: PropTypes.func.isRequired,
+    handleDelete: PropTypes.func.isRequired,
     have: PropTypes.bool.isRequired,
-    text: PropTypes.string.isRequired,
+    text: PropTypes.string.isRequired
+    
 }
 
 export default Item

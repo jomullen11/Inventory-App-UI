@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { addItem } from '../Actions'
+// import {API_URL} from '../Navigation/Config'
 
 let AddItem = ({ dispatch}) => {
     let input

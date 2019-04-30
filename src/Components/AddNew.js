@@ -34,12 +34,12 @@ class AddNew extends Component {
     // handleSubmit = async (event) => { 
     //     event.preventDefault()
 
-        // this.setState({
-        //     name: null,
-        //     type: null,
-        //     desc: null,
-        //     expire: null
-        // })
+    //     this.setState({
+    //         name: null,
+    //         type: null,
+    //         desc: null,
+    //         expire: null
+    //     })
     // }
 
     handleReset = () => {

@@ -6,6 +6,19 @@ import Kitchen from '../Components/Kitchen'
 import Festival from '../Components/Festival'
 import Home from '../Components/HomeInventory'
 
+const Refresh = ({ path = '/' }) => (
+    <Route
+        path={path}
+        component={({ history, location, match }) => {
+            history.replace({
+                ...location,
+                pathname:location.pathname.substring(match.path.length)
+            });
+            return null;
+        }}
+    />
+);
+
 class Routes extends Component{
     render(){
         return(
@@ -17,6 +30,7 @@ class Routes extends Component{
                     <Route path='/kitchen' component={Kitchen} />
                     <Route path='/festival' component={Festival} />
                     <Route path='/home' component={Home} />
+                    <Refresh path="/refresh"/>
                 </Switch>
                 {/* </Router> */}
             </div>

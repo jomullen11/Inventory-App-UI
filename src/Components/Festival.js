@@ -86,6 +86,7 @@ class Festival extends Component{
         .then(res => res.json())
         .then(data => data.map(element => <FestivalPresenter read={element} refresh={this.getRead} />))
         .then(components => this.setState({read: components}))
+        .catch(err => console.log(err))
     }
 
     componentDidMount() {

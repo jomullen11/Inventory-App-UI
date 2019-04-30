@@ -20,8 +20,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchStateToProps = (dispatch) => ({
-    toggleItem: id => dispatch(toggleItem(id))
-    // removeItem: id => dispatch(removeItem(id))
+    toggleItem: id => dispatch(toggleItem(id)),
+    removeItem: id => dispatch(removeItem(id))
 })
 
 const VisibleItemList = connect(

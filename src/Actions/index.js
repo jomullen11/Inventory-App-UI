@@ -23,5 +23,6 @@ export const removeItem = id => ({
 export const VisibilityFilters = {
     SHOW_ALL: 'SHOW_ALL',
     SHOW_HAVE: 'SHOW_HAVE',
-    SHOW_NEED: 'SHOW_NEED'
+    SHOW_NEED: 'SHOW_NEED',
+    REMOVE_ITEM: 'REMOVE_ITEM'
 }
