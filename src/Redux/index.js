@@ -1,9 +1,6 @@
 import React from 'react'
-// import { render } from 'react-dom'
 import { Provider } from 'react-redux'
-import { createStore } from 'redux'
-import haveItem from './Reducers'
-import HaveDisplay from './Components/HaveDisplay'
+import HaveDisplay from '../Components/ReduxComponents/HaveDisplay'
 import configureStore from '../store/configureStore';
 
 const store = configureStore()

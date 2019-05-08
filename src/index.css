@@ -23,6 +23,7 @@ h1{
   margin-top: 8%;
   margin-bottom: 3%;
   text-align: center;
+  text-transform: capitalize;
 }
 
 h3{
@@ -233,17 +234,7 @@ fieldset, ul{
 }
 
 /* Festival Page */
-.redux-add-item{
+.redux-add-item .redux-items .redux-buttons{
   display: flex;
   align-self: center;
-}
-
-.redux-buttons{
-  display: flex;
-  align-content: center;
-}
-
-.redux-items{
-  display: flex;
-  align-content: center;
 }

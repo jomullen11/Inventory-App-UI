@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { toggleItem, VisibilityFilters, removeItem } from '../Actions'
-import ItemList from '../Components/ItemList'
+import ItemList from '../Components//ReduxComponents/ItemList'
 
 const getVisibleItems = ( items, filter ) => {
     switch(filter) {
@@ -8,8 +8,6 @@ const getVisibleItems = ( items, filter ) => {
             return items.filter(t => t.have)
         case VisibilityFilters.SHOW_NEED:
             return items.filter(t => !t.have)
-        case VisibilityFilters.SHOW_ALL:
-            return items
         default:
             throw new Error('Unkown Filter' + filter)
     }

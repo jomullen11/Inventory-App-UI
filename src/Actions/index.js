@@ -1,3 +1,5 @@
+
+
 let nextItemId = 0
 export const addItem = text => ({
     type: 'ADD_ITEM',
@@ -15,7 +17,7 @@ export const toggleItem = id => ({
     id
 })
 
-export const removeItem = id => ({
+export const removeItem = (id, item) => ({
     type: 'REMOVE_ITEM',
     id
 })

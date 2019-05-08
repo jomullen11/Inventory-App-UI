@@ -13,7 +13,7 @@ const items = (state=[], action) => {
             return state.map(item =>
                 item.id === action.id ? { ...item, have : !item.have } : item )
         case 'REMOVE_ITEM':
-            return state.filter((data, i) => i !== action.id);
+            return state.filter((data, i) => i!== action.id);
         default:
             return state
         

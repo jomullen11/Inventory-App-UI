@@ -1,29 +1,28 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import { API_URL } from '../Navigation/Config'
+import { Redirect } from 'react-router-dom'
+import sleep from 'sleep-promise'
 
-class KitchenUpdate extends Component {
+class UpdateForm extends Component {
     state = {
+        redirect: false,
+        activeRoute: this.props.activeRoute,
         name: this.props.read.name,
         type: this.props.read.type,
         location: this.props.read.location,
         desc: this.props.read.desc,
-        expire: this.props.read.expire
+        expire: this.props.read.expire,
+        from: this.props.location
     }
-
-    handleSubmit = async (event) => {
+    
+    handleSubmit = async (event, resolve) => {
         event.preventDefault()
-        await fetch(`${API_URL}/kitchen/${ this.props.read._id }`, {
+        await fetch(`${API_URL + this.state.activeRoute + '/' + this.props.read._id }`, {
             method: 'PUT',
             body: JSON.stringify(this.state),
-            headers: { 'content-type' : 'application/json'}
-        }).then( this.setState({
-            name: '',
-            type: '',
-            location: '',
-            desc: '',
-            expire: ''
-        })).then(() => this.closeUpdate())
-        .then(window.location.reload())
+            header: {'content-type' : 'application/json'}
+        }).then(sleep(100))
+        .then(() => this.setState({redirect: !this.state.redirect}))
         .catch(err => console.log(err))
     }
 
@@ -33,9 +32,14 @@ class KitchenUpdate extends Component {
         })
     }
 
+
+
     render() {
-        return (
-            <form onSubmit={this.handleSubmit}>
+        const redirect = this.state.redirect
+        return(
+            <Fragment>
+            { redirect ? <Redirect to={{pathname: `/refresh${this.state.activeRoute}`, state: {from: this.props.location}}} /> :  
+                <form onSubmit={this.handleSubmit}>
                 <input
                     type='text'
                     name='name'
@@ -77,10 +81,12 @@ class KitchenUpdate extends Component {
                     onChange={this.handleChange}
                 />
                 <br/>
-                <input type='submit' value='Update'/>
-            </form>
+                <input type='submit' value='Update' />
+                </form>
+            }
+            </Fragment>
         )
     }
 }
 
-export default KitchenUpdate
+export default UpdateForm

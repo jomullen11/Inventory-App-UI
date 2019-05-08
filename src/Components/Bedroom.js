@@ -1,10 +1,19 @@
 import React, { Component } from 'react'
-// import { API_URL} from '../Navigation/Config'
+import { Provider } from 'react-redux'
+import { Redirect } from 'react-router-dom'
+import { createStore } from 'redux'
+import haveItem from '../Reducers'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
+import VisibleItemList from '../Containers/VisibleItemList'
+import Footer from '../Components/ReduxComponents/Footer'
+import AddItem from '../Containers/AddItem'
+import ItemPresenter from './ItemPresenter'
+import { API_URL  } from '../Navigation/Config'
 
+const store = createStore(haveItem)
 
-class AddNew extends Component {
+export default class Bedroom extends Component {
     constructor(props, context) {
         super(props, context);
     
@@ -15,38 +24,55 @@ class AddNew extends Component {
     
 
     this.state = {
+        read: [],
+        redirect: false,
         show: false,
+        activeRoute: this.props.location.pathname,
         name: '',
         type: '',
         desc: '',
+        location: '',
         expire: ''
     };
       }
     
     handleClose() {
-    this.setState({ show: false });
+        this.setState({
+            show: false,
+            redirect: !this.state.redirect
+        })
     }
     
     handleShow() {
     this.setState({ show: true });
     }
 
-    // handleSubmit = async (event) => { 
-    //     event.preventDefault()
-
-    //     this.setState({
-    //         name: null,
-    //         type: null,
-    //         desc: null,
-    //         expire: null
-    //     })
-    // }
+    handleSubmit = async (event) => {
+        event.preventDefault()
+        await fetch(`${ API_URL + this.props.location.pathname }`, {
+            method: "POST",
+            body: JSON.stringify(this.state),
+            headers: { "content-type": "application/json" } 
+        })
+            .then(
+                this.setState({
+                    name: '',
+                    type: '',
+                    desc: '',
+                    location: '',
+                    expire: ''
+                })
+            )
+            .catch(err => console.log(err))
+        
+    }
 
     handleReset = () => {
         this.setState({
             name: '',
             type: '',
             desc: '',
+            location: '',
             expire: ''
         })
     }
@@ -56,12 +82,30 @@ class AddNew extends Component {
             [ event.target.name ] : event.target.value
         })
     }
+    
+    getRead = async () => {
+        fetch(`${ API_URL + this.props.location.pathname}`)
+        .then(res => res.json())
+        .then(data => data.map(element => <ItemPresenter read={element} activeRoute={this.state.activeRoute}/>))
+        .then(components => this.setState({read : components}))
+        .catch(err => console.log(err))
+    }
 
-    render(){
-        console.log(this.state)
+    componentDidMount(){
+        this.getRead()
+    }
+
+    render() {
+        const redirect = this.state.redirect
+
+        const pageName = Array.from(this.props.location.pathname) // creating an array from location.pathname
+        pageName.shift() // altering the array by removing the first index
+        
         return(
             <div>
-                <>
+                <h1>{pageName}</h1>
+                { redirect ? <Redirect to={{pathname: `/refresh${this.props.location.pathname}`, state: {from: this.props.location}}}/> : 
+                <div>
                     <Button variant="primary" onClick={this.handleShow} className="openModal">
                     <h2 className="openModalText">+</h2>
                     </Button>
@@ -90,6 +134,14 @@ class AddNew extends Component {
                                 required
                             />
                             <br/>
+                            <input
+                                type='text'
+                                name='location'
+                                value={this.state.location}
+                                placeholder='Item Location'
+                                onChange={this.handleChange}
+                            />
+                            <br/>
                             <textarea
                                 type='text'
                                 name='desc'
@@ -98,19 +150,16 @@ class AddNew extends Component {
                                 onChange={this.handleChange}
                             />
                             <br/>
+                            {/* Expiration date toggle */}
                             <div className="Modaltoggle">  
-                                {/* <!-- Checkbox toggle --> */}
                                 <input type="checkbox" value="selected" id="expiration-date" className="toggleInput" />
                                 <label htmlFor="expiration-date" className="toggleLabel">Need to Add an Expiration/Rotate Stock Date?</label> 
-                                
-                                {/* Content to toggle */}
                                 <div className="toggleContent">
                                     <input
                                         type='date'
                                         name='expire'
                                         id="expireDate"
                                         value={this.state.expire}
-                                        placeholder='Expiration Date'
                                         onChange={this.handleChange}
                                     />
                                 </div>
@@ -128,10 +177,15 @@ class AddNew extends Component {
                         </Button>
                     </Modal.Footer>
                     </Modal>
-                </>
+                </div>
+                }
+            <Provider store={store}>
+                <div className="redux-add-item container"><AddItem /></div> 
+                <div className="redux-buttons container"><Footer /></div> 
+                <div className="redux-items container"><VisibleItemList /></div>
+            </Provider>
+            {this.state.read}
             </div>
         )
     }
 }
-
-export default AddNew

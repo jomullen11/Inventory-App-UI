@@ -1,18 +1,19 @@
 import React, { Component } from 'react'
 import { Provider } from 'react-redux'
+import { Redirect } from 'react-router-dom'
 import { createStore } from 'redux'
 import haveItem from '../Reducers'
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import VisibleItemList from '../Containers/VisibleItemList'
-import Footer from '../Components/Footer'
+import Footer from '../Components/ReduxComponents/Footer'
 import AddItem from '../Containers/AddItem'
-import SurvivalPresenter from './SurvivalPresenter'
+import ItemPresenter from './ItemPresenter'
 import { API_URL  } from '../Navigation/Config'
 
 const store = createStore(haveItem)
 
-class Survival extends Component {
+export default class Survival extends Component {
     constructor(props, context) {
         super(props, context);
     
@@ -24,7 +25,9 @@ class Survival extends Component {
 
     this.state = {
         read: [],
+        redirect: false,
         show: false,
+        activeRoute: this.props.location.pathname,
         name: '',
         type: '',
         desc: '',
@@ -34,15 +37,10 @@ class Survival extends Component {
       }
     
     handleClose() {
-    this.setState({
-        show: false,
-        name: '',
-        type: '',
-        desc: '',
-        location: '',
-        expire: ''
-    });
-    window.location.reload()
+        this.setState({
+            show: false,
+            redirect: !this.state.redirect
+        })
     }
     
     handleShow() {
@@ -51,12 +49,11 @@ class Survival extends Component {
 
     handleSubmit = async (event) => {
         event.preventDefault()
-        await fetch(`${ API_URL }/survival`, {
+        await fetch(`${ API_URL + this.props.location.pathname }`, {
             method: "POST",
             body: JSON.stringify(this.state),
             headers: { "content-type": "application/json" } 
         })
-            .then(this.refesh)
             .then(
                 this.setState({
                     name: '',
@@ -87,9 +84,9 @@ class Survival extends Component {
     }
     
     getRead = async () => {
-        fetch(`${ API_URL }/survival`)
+        fetch(`${ API_URL + this.props.location.pathname}`)
         .then(res => res.json())
-        .then(data => data.map(element => <SurvivalPresenter read={element} refesh={this.getRead}/>))
+        .then(data => data.map(element => <ItemPresenter read={element} activeRoute={this.state.activeRoute}/>))
         .then(components => this.setState({read : components}))
         .catch(err => console.log(err))
     }
@@ -99,9 +96,15 @@ class Survival extends Component {
     }
 
     render() {
+        const redirect = this.state.redirect
+
+        const pageName = Array.from(this.props.location.pathname) // creating an array from location.pathname
+        pageName.shift() // altering the array by removing the first index
+        
         return(
             <div>
-                <h1>Survival</h1>
+                <h1>{pageName}</h1>
+                { redirect ? <Redirect to={{pathname: `/refresh${this.props.location.pathname}`, state: {from: this.props.location}}}/> : 
                 <div>
                     <Button variant="primary" onClick={this.handleShow} className="openModal">
                     <h2 className="openModalText">+</h2>
@@ -175,6 +178,7 @@ class Survival extends Component {
                     </Modal.Footer>
                     </Modal>
                 </div>
+                }
             <Provider store={store}>
                 <div className="redux-add-item container"><AddItem /></div> 
                 <div className="redux-buttons container"><Footer /></div> 
@@ -185,6 +189,3 @@ class Survival extends Component {
         )
     }
 }
-
-
-export default Survival

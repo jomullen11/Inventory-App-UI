@@ -13,7 +13,7 @@ import { API_URL  } from '../Navigation/Config'
 
 const store = createStore(haveItem)
 
-export default class Home extends Component {
+export default class InventoryPage extends Component {
     constructor(props, context) {
         super(props, context);
     
@@ -54,6 +54,7 @@ export default class Home extends Component {
             body: JSON.stringify(this.state),
             headers: { "content-type": "application/json" } 
         })
+            .then(this.refesh)
             .then(
                 this.setState({
                     name: '',
@@ -63,6 +64,7 @@ export default class Home extends Component {
                     expire: ''
                 })
             )
+            // .then(() => this.setState({redirect: !this.state.redirect})) //if wanting to refresh page component on save (will cause modal to close as well)
             .catch(err => console.log(err))
         
     }
